@@ -105,7 +105,18 @@
 
 - (void)saveToPng:(NSView *)view path:(NSURL *)path name:(NSString *)name
 {
-    NSBitmapImageRep *bitmapImage = [view bitmapImageRepForCachingDisplayInRect:view.bounds];
+    NSBitmapImageRep *bitmapImage = [[NSBitmapImageRep alloc]
+                             initWithBitmapDataPlanes:NULL
+                             pixelsWide:view.bounds.size.width
+                             pixelsHigh:view.bounds.size.height
+                             bitsPerSample:8
+                             samplesPerPixel:4
+                             hasAlpha:YES
+                             isPlanar:NO
+                             colorSpaceName:NSCalibratedRGBColorSpace
+                             bytesPerRow:0
+                             bitsPerPixel:0];
+    [bitmapImage setSize:view.bounds.size];
     [view cacheDisplayInRect:view.bounds toBitmapImageRep:bitmapImage];
     
     NSData *pngData = [bitmapImage representationUsingType:NSPNGFileType properties:nil];
