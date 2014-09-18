@@ -65,13 +65,14 @@
 
 - (void)generateAppIconOfSize:(CGSize)size fontSize:(CGFloat)fontSize path:(NSURL *)outputpath name:(NSString *)filename
 {
-    NSView *backerView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, size.width, size.height)];
+    CGFloat screenScale = [[NSScreen mainScreen] backingScaleFactor];
+    NSView *backerView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, size.width / screenScale, size.height / screenScale)];
     backerView.wantsLayer = YES;
     backerView.layer.backgroundColor = self.backgroundColor.color.CGColor;
     
-    NSFont *initialsFont = [NSFont systemFontOfSize:fontSize];
+    NSFont *initialsFont = [NSFont systemFontOfSize:fontSize / screenScale];
     
-    NSTextView *initials = [[NSTextView alloc] initWithFrame:NSMakeRect(0, (size.height - fontSize) / 2, size.width, fontSize)];
+    NSTextView *initials = [[NSTextView alloc] initWithFrame:NSMakeRect(0, (size.height / screenScale - fontSize / screenScale) / 2, size.width / screenScale, fontSize / screenScale)];
     initials.font = initialsFont;
     initials.alignment = NSCenterTextAlignment;
     initials.textColor = self.foregroundColor.color;
@@ -84,13 +85,14 @@
 
 - (void)generateDefaultImageOfSize:(CGSize)size fontSize:(CGFloat)fontSize path:(NSURL *)outputpath name:(NSString *)filename
 {
-    NSView *backerView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, size.width, size.height)];
+    CGFloat screenScale = [[NSScreen mainScreen] backingScaleFactor];
+    NSView *backerView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, size.width / screenScale, size.height / screenScale)];
     backerView.wantsLayer = YES;
     backerView.layer.backgroundColor = self.backgroundColor.color.CGColor;
     
     NSFont *titleFont = [NSFont systemFontOfSize:fontSize];
     
-    NSTextView *title = [[NSTextView alloc] initWithFrame:NSMakeRect(0, (size.height - fontSize) / 2, size.width, fontSize)];
+    NSTextView *title = [[NSTextView alloc] initWithFrame:NSMakeRect(0, (size.height / screenScale - fontSize / screenScale) / 2, size.width / screenScale, fontSize / screenScale)];
     title.font = titleFont;
     title.alignment = NSCenterTextAlignment;
     title.textColor = self.foregroundColor.color;
